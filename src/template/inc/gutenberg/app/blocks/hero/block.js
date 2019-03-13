@@ -39,8 +39,6 @@ class hero_Block extends Component {
 				className,
 				setState
 			} = this.props;
-
-			console.log(this)
 			
 		}
 
@@ -152,15 +150,13 @@ class hero_Block extends Component {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'cgb/block-mphar-blocks', {
+registerBlockType( 'cgb/hero-template-blocks', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'mphar-blocks - CGB Block' ), // Block title.
+	title: __( 'Hero block' ), // Block title.
 	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	category: 'template-blocks', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'mphar-blocks — CGB Block' ),
-		__( 'CGB Example' ),
-		__( 'create-guten-block' ),
+		__( 'Hero block' ),
 	],
 	attributes: {
 	    title: {

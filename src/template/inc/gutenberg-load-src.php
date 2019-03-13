@@ -60,3 +60,28 @@ function gutenberg_blocks_editor_assets() { // phpcs:ignore
 
 // Hook: Editor assets.
 add_action( 'enqueue_block_editor_assets', 'gutenberg_blocks_editor_assets' );
+
+
+function register_blocks_category( $categories, $post ) {
+	return array_merge(
+		$categories,
+		array(
+			array(
+				'slug' => 'template-blocks',
+				'title' => __( 'Template blocks', 'template-blocks' ),
+			),
+		)
+	);
+}
+add_filter( 'block_categories', 'register_blocks_category', 10, 2);
+
+function gutenberg_blocks_editor_workspace_width() {
+
+	echo('<style type="text/css">
+		.wp-block { 
+			max-width: 100% !important; 
+		}
+	</style>');
+}
+
+add_action( 'admin_print_styles', 'gutenberg_blocks_editor_workspace_width' );

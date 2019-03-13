@@ -194,8 +194,8 @@ class PostList extends Component {
 					/>
 			    </InspectorControls>,
 				<div className="root-app">
-					<section className="services">
-						<div className="services__inner">
+					<section className="posts">
+						<div className="posts__inner">
 							<div className="title">
 								<RichText
 									tagName="h2"
@@ -205,7 +205,7 @@ class PostList extends Component {
 									onChange={this.onChangeTitle}
 								/>
 							</div>				
-							<div className="services__list">
+							<div className="posts__list">
 								{post}
 							</div>
 						</div>
@@ -228,11 +228,11 @@ class PostList extends Component {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'cgb/services-block', {
+registerBlockType( 'cgb/post-template-blocks', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: __( 'Posts block' ), // Block title.
 	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	category: 'template-blocks', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		__( 'Posts block' ),
 	],
@@ -286,12 +286,12 @@ registerBlockType( 'cgb/services-block', {
 		}
         
 		return (
-			<section className="services">
-				<div className="services__inner  wrapper">
+			<section className="posts">
+				<div className="posts__inner  wrapper">
 					<div className="title">
 						<h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
 					</div>				
-					<div className="services__list">
+					<div className="posts__list">
 						{postListRender}
 					</div>
 				</div>

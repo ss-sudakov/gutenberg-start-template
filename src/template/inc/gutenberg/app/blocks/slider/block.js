@@ -102,8 +102,6 @@ class Slider extends Component {
 								<div className="hero__description">
 								</div>
 							</div>
-							<div className="hero__triangles">
-							</div>
 						</div>
 					</section>
 				</div>
@@ -124,15 +122,13 @@ class Slider extends Component {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'cgb/block-slider-blocks', {
+registerBlockType( 'cgb/slider-template-blocks', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Slider' ), // Block title.
+	title: __( 'Slider block' ), // Block title.
 	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	category: 'template-blocks', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'mphar-blocks — CGB Block' ),
-		__( 'CGB Example' ),
-		__( 'create-guten-block' ),
+		__( 'Slider' ),
 	],
 	attributes: {
 	    title: {
@@ -200,7 +196,6 @@ registerBlockType( 'cgb/block-slider-blocks', {
 						<div className="hero__description">
 						</div>
 					</div>
-					<div className="hero__triangles"></div>
 				</div>
 			</section>
 		);
