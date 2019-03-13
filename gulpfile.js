@@ -1,4 +1,4 @@
-var ThemeName = 'start-template-wp-plus-gulp'
+var ThemeName = 'gutenberg-start-template'
 var Host = 'test1.su'
 
 // исходные и сбилженые папки
