@@ -1,0 +1,47 @@
+{
+  "name": "WebCossacks",
+  "version": "1.0.0",
+  "description": "За поддержкой обращаться по адресу webcossacks.com",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Serhii Sudakov",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@wordpress/api-fetch": "^2.2.8",
+    "@wordpress/compose": "^3.0.1",
+    "@wordpress/components": "7.1.0",
+    "cgb-scripts": "1.15.0",
+    "del": "^3.0.0",
+    "gulp": "3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-cache": "^1.0.2",
+    "gulp-clean-css": "^3.9.4",
+    "gulp-concat": "^2.6.1",
+    "gulp-debug": "^4.0.0",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-newer": "^1.4.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-rsync": "0.0.8",
+    "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.1",
+    "jquery-validation": "^1.19.0",
+    "node-normalize-scss": "^8.0.0",
+    "poly-fluid-sizing": "^1.1.0",
+    "bourbon": "^5.1.0",
+    "browser-sync": "^2.24.6",
+    "gulp-sourcemaps": "^2.6.5",
+    "vinyl-source-stream": "^2.0.0",
+    "vinyl-buffer": "^1.0.1",
+    "webpack": "^4.29.6",
+    "webpack-stream": "^5.2.1",
+    "uglifyjs-webpack-plugin": "2.1.2"
+  },
+  "dependencies": {
+    "@wordpress/components": "^7.1.0"
+  }
+}

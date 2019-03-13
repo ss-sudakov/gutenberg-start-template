@@ -1,0 +1,101 @@
+@import 'list-sort';
+@import 'map-sort';
+// Include this file after poly-fluid-sizing mixin
+// @$type-fluid: 'vw' or 'pfs', where pfs is poly-fluid-sizing
+$type-fluid: 'vw';
+
+@mixin pfs($name, $map){
+	@include poly-fluid-sizing($name, $map);
+}
+
+
+@function get-vw($max-breakpoint, $target) {
+
+	$vw-context: ($max-breakpoint*.01) * 1px;
+	@return ($target/$vw-context) * 1vw;
+}
+
+@mixin vw($property, $map){
+	
+	// Get the number of provided breakpoints
+	$length: length(map-keys($map));
+	
+	// For vw
+	$start_map: map-sort($map);
+	$start_keys: map-keys($map);
+
+	@if ($length < 1) {
+		@error "For using SET-FLUID must have more break-point less then 0 ";
+	}
+	
+	@if ($length == 1) {
+
+		$map: map-sort($map);
+	  	$keys: map-keys($map);
+
+		#{$property}: get-vw(nth($keys,$length),map-get($map, nth($keys,$length)))
+		
+	}@else{
+
+		$map: pfs-handler($map);
+		@include pfs($property, $map)
+
+		@media (min-width: nth($start_keys,$length) + 1 * 1px) {
+			#{$property}: get-vw(nth($start_keys,$length),map-get($start_map, nth($start_keys,$length)))
+		}
+
+	}
+ 	
+}
+
+
+@function select-fluid-type($type-fluid){
+  @if (mixin-exists(poly-fluid-sizing) and ($type-fluid == 'pfs')) 
+  {
+    $exists: true;
+    @return $exists;
+  }@else if  (mixin-exists(vw) and ($type-fluid == 'vw'))
+  {
+    $exists: false;
+    @return $exists;
+  }
+  @else
+  {
+  	@error "$type-fluid is not defined or not mixins: poly-fluid-sizing, vw";
+  }
+}
+
+@function pfs-handler($map){
+	$length: length(map-keys($map));
+	$map_pfs: ();
+	$map: map-sort($map);
+  	$keys: map-keys($map);
+	@for $i from 1 through ($length) {
+		$key: nth($keys,$i) * 1px;
+		$value: map-get($map, nth($keys, $i));
+  		$map_pfs: map-merge($map_pfs, ($key: $value) );
+	}
+	@return $map_pfs;	
+}
+
+@mixin set-fluid($property, $map, $type-fluid-local: null){
+	@if($type-fluid-local != null){
+		$type-fluid: $type-fluid-local !global;
+	}
+	@if(select-fluid-type($type-fluid) == true){
+		$map: pfs-handler($map);
+		@include pfs($property, $map);
+	}@else if(select-fluid-type($type-fluid) == false){
+		@include vw($property, $map);
+	}@else{
+		@error "Fluid type not exist";
+	}
+}
+
+// How to use:
+// $map: (320: 14px, 960: 20px, 1200: 27px, 1366: 33px, 1920: 40px);
+// .footer{
+// 	@include set-fluid('padding-left',$map); for global type fluid (set $type-fluid variable)
+// 	@include set-fluid('padding-right',$map, 'pfs'); for poly-fluid-sizing @mixin local
+// 	@include set-fluid('padding-top',$map, 'vw'); for vw @mixin local
+// }
