@@ -1,4 +1,5 @@
 import { Component } from '@wordpress/element';
+import { Button } from '@wordpress/components';
 
 const {
     MediaUpload,
@@ -18,27 +19,25 @@ export default class ImageControl extends Component {
 
 	}
 
-	onImageSelect = (imageObject) =>
+	set_image__handler = (instans, imageObject) =>
 	{
-	    this.props.set_image({ image: imageObject })
+	    this.props.set_image({ instans: instans, image: imageObject })
 	}
 
-	removeImage = (image) =>
+	remove_image__handler = (instans) =>
 	{
-		this.props.remove_image({ image: image })
+		this.props.remove_image({ instans: instans })
 	}
 
-	imageRender = (image) =>
+	render_image = (instans, image) =>
 	{
 		let render
-
-
-		if(image)
+		if( Object.keys(image).length != 0 )
 		{
 			render = 
 					<div>
 						<img src={image.sizes.thumbnail.url} alt={image.title} />
-						<button onClick={(e) => { this.removeImage(image, e) } } >Remove Image</button>
+						<Button isDefault onClick={(event) => { this.remove_image__handler(instans, event) } } >Remove Image</Button>
 					</div>
 
 
@@ -46,21 +45,21 @@ export default class ImageControl extends Component {
 		return render
 	}
 
-	uploadImageButton = (image) =>
+	upload_image = (instans, image) =>
 	{
+		let render;
 		
-		let render
-		if(!image)
+		if(Object.keys(image).length === 0)
 		{
 			render =
 						<MediaUpload
-							onSelect={(imageObject) => {this.onImageSelect(imageObject)}}
+							onSelect={(imageObject) => {this.set_image__handler(instans, imageObject)}}
 							type="image"
 							value={image}
 							render={({ open }) => (
-								<button onClick={open}>
+								<Button isDefault onClick={open}>
 									Upload Image!
-								</button>
+								</Button>
 							)}
 						/>
 		}
@@ -71,11 +70,12 @@ export default class ImageControl extends Component {
 	render(){
 
 			const {
+				instans,
 				image,
 			} = this.props
-
-			let a = this.imageRender(image)
-			let b = this.uploadImageButton(image)
+			
+			let a = this.render_image(instans, image)
+			let b = this.upload_image(instans, image)
 			
 			return(
 

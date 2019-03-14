@@ -23,7 +23,7 @@ function gutenberg_blocks_block_assets() { // phpcs:ignore
 	// Styles.
 	wp_enqueue_style(
 		'gutenberg_blocks-bootstrap-style-css', // Handle.
-		get_template_directory_uri() . '/inc/gutenberg/assets/css/bootstrap-grid.min.css',
+		get_template_directory_uri() . '/admin assets/css/bootstrap-grid.min.css',
 		array( 'wp-editor' ) // Dependency to include the CSS after it.
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: File modification time.
 	);
@@ -80,6 +80,10 @@ function gutenberg_blocks_editor_workspace_width() {
 	echo('<style type="text/css">
 		.wp-block { 
 			max-width: 100% !important; 
+		}
+		.margin-15
+		{
+			margin-bottom: 15px;
 		}
 	</style>');
 }

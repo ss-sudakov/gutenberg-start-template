@@ -80,8 +80,6 @@ class PostList extends Component {
 
 			})
 
-			console.log(this)
-
 		}
 
 		onChangeTitle = (value) => 

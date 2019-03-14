@@ -7,9 +7,9 @@
 
 //  Import CSS.
 import { Component } from '@wordpress/element';
-import ImageControl from '../libs/imageControl/imageControl.js';
-import SliderModal from './sliderModal.js';
-import { Button, Modal } from '@wordpress/components';
+import ImageControl from '../libs/imageControl/imageControl';
+import SliderModal from './sliderModal';
+import { Button } from '@wordpress/components';
 import { withState } from '@wordpress/compose';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
@@ -29,11 +29,21 @@ const {
 } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 
-class Slider extends Component {
+class Slider extends Component 
+{
+		initialState()
+		{
+			const 
+			{ 
+				attributes,
+			} = this.props;
+
+			this.state = {rows: attributes.rows};
+		}
 
 		constructor()
 		{
-			super(...arguments)
+			super(...arguments);
 
 			const 
 			{ 
@@ -42,39 +52,18 @@ class Slider extends Component {
 				className,
 				setState
 			} = this.props;
-		}
-
-		onChangeTitle = (value) => 
-		{
 			
-			this.props.setAttributes({
-				title: value
-			});
-	    }
+			this.initialState()
 
-	    onChangeDescription = (value) =>
+		}
+
+	    save_slider = (attrs) => 
 	    {
-			this.props.setAttributes({
-				description: value
-			});
+			this.setState(attrs);
+			this.setState({ updated: true });
+			this.props.setAttributes(attrs);
+			this.props.setAttributes({ updated: true });
 	    }
-
-		set_image = (image) =>
-		{
-
-		    this.props.setAttributes({
-		        backgroundImage: image.image
-		    });
-		}
-
-		remove_image = (image) =>
-		{
-
-			// console.log(image)
-		    this.props.setAttributes({
-		        backgroundImage: null
-		    });
-		}
 
 		render()
 		{
@@ -83,12 +72,12 @@ class Slider extends Component {
 				title,
 				description,
 				backgroundImage,
-				slides
+				rows
 			} = this.props.attributes;
 
 			return [
 				<InspectorControls>
-					<SliderModal slides={slides} prefix="slide-"/>
+					<SliderModal rows={ rows } save_slider={ this.save_slider } prefix="slide-" />
 			    </InspectorControls>,
 				<div className="root-app">
 					<section className="hero">
@@ -97,7 +86,7 @@ class Slider extends Component {
 						>
 							<div className="hero__content">
 								<div className="title">
-
+								This is slider title
 								</div>
 								<div className="hero__description">
 								</div>
@@ -192,6 +181,7 @@ registerBlockType( 'cgb/slider-template-blocks', {
 				>
 					<div className="hero__content">
 						<div className="title">
+						This is slider title
 						</div>
 						<div className="hero__description">
 						</div>
