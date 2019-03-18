@@ -39,7 +39,8 @@
     "vinyl-buffer": "^1.0.1",
     "webpack": "^4.29.6",
     "webpack-stream": "^5.2.1",
-    "uglifyjs-webpack-plugin": "2.1.2"
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "react-responsive-modal": "^3.6.0"
   },
   "dependencies": {
     "@wordpress/components": "^7.1.0"
