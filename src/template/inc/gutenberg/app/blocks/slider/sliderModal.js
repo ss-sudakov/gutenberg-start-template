@@ -7,9 +7,14 @@
 
 //  Import CSS.
 import { Component } from '@wordpress/element';
-import ImageControl from '../libs/imageControl/imageControl';
 import { Button, TextareaControl } from '@wordpress/components';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import Modal from 'react-responsive-modal';
+import SlideItem from './slideItem';
+import ImageControl from '../libs/imageControl/imageControl';
+import functions from '../../functions.jsx';
+import update from 'immutability-helper'
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 
@@ -27,7 +32,7 @@ const {
     AlignmentToolbar
 } = wp.blocks; // Import registerBlockType() from wp.blocks
 
-export default class SliderModal extends Component {
+class SliderModal extends Component {
 
 		initialState()
 		{
@@ -42,8 +47,8 @@ export default class SliderModal extends Component {
 				return this.state = {rows: []};
 			}
 
-				
 		}
+
 
 		constructor()
 		{
@@ -57,7 +62,6 @@ export default class SliderModal extends Component {
 			} = this.props;
 
 			this.initialState();
-
 			
 		}
 
@@ -128,7 +132,7 @@ export default class SliderModal extends Component {
 		{
 
 			let newRow = {slide: {
-							id: _.uniqueId(this.get_prefix()),
+							id: functions.uniqid(5,this.get_prefix()),
 							image: {},
 							title: {}
 						}};
@@ -170,6 +174,45 @@ export default class SliderModal extends Component {
 			return rows
 		}
 
+		pushSlide(row) {
+			this.setState(update(this.state, {
+				rows: {
+					$push: [ row ]
+				}
+			}));
+
+			this.props.save_slider(this.state)
+		}
+
+		removeSlide(index) {		
+			this.setState(update(this.state, {
+				rows: {
+					$splice: [
+						[index, 1]
+					]
+				}
+			}));
+
+			this.props.save_slider(this.state)
+		}
+
+		moveSlide = (dragIndex, hoverIndex) => {
+
+			const { rows } = this.state;		
+			const dragSlide = rows[dragIndex];
+
+			this.setState(update(this.state, {
+				rows: {
+					$splice: [
+						[dragIndex, 1],
+						[hoverIndex, 0, dragSlide]
+					]
+				}
+			}));
+			
+			this.props.save_slider(this.state)
+		}
+
 		render_rows = () => {
 
 			const rows = this.get_rows()
@@ -179,34 +222,9 @@ export default class SliderModal extends Component {
 			
 			$.each(rows,function( index, row ) {
 
-				rendeRows.push(
+				let slide = <SlideItem row={ row } _this={ _this } index={ index } moveSlide={ _this.moveSlide } />;
 
-					<div className="row margin-15" key={row.slide.id} >
-						<div className="col-sm">
-							<div className="thumbnail">
-								<ImageControl image={row.slide.image} instans={ row } set_image={ (image) => { _this.set_image( image ) } }  remove_image={ (row) => { _this.remove_image( row ) } } />
-							</div>
-						</div>
-						<div className="col-sm">
-							<div className="title">
-								<TextareaControl
-									lable="Slide title"
-									help="Etern slide title here"
-									value={row.title}
-									autoFocus
-									onChange={ (title) => { _this.on_change_title(title, row) } }
-								/>
-							</div>
-						</div>
-						<div className="col-sm">
-						<Button 
-							isDefault 
-							onClick={ (e) => { _this.remove_row(row) } }>
-							Remove slide
-						</Button>
-						</div>
-					</div>
-					);
+				rendeRows.push( slide );
 			});
 
 			return rendeRows
@@ -249,3 +267,5 @@ export default class SliderModal extends Component {
 		}
 		
 }
+
+export default DragDropContext(HTML5Backend)(SliderModal);
