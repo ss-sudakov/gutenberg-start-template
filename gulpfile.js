@@ -80,7 +80,7 @@ gulp.task('common-js', function() {
 });
 
 gulp.task('blocks-js', function() {
-	return gulp.src('src/template/inc/gutenberg/app/**/*.js')
+	return gulp.src('src/template/inc/gutenberg/app/**/*.+(js|jsx)')
     .pipe(webpackStream(webpackConfig), webpack)
     .pipe(gulp.dest('src/js'))
     .pipe(gulp.dest('./js'))
@@ -104,7 +104,7 @@ gulp.task('js', ['common-js'], function() {
 });
 
 gulp.task('sass', function() {
-	return gulp.src('src/sass/**/*.sass')
+	return gulp.src('src/sass/**/*.+(sass|scss"|css)')
 	.pipe(sass({
 		includePaths: [
 			'node_modules/bourbon/core',
@@ -125,9 +125,9 @@ gulp.task('sass', function() {
 });
 
 gulp.task('watch', ['blocks-js', 'sass', 'js', 'browsersync', 'styles-css'], function() {
-	gulp.watch('src/sass/**/*.sass', ['sass']);
-	gulp.watch(['src/libs/**/*.js', 'src/js/common.js'], ['js']);
-	gulp.watch('src/template/inc/gutenberg/app/**/*.js', ['blocks-js']);
+	gulp.watch('src/sass/**/*.+(sass|scss"|css)', ['sass']);
+	gulp.watch(['src/libs/**/*.+(js|jsx)', 'src/js/common.js'], ['js']);
+	gulp.watch('src/template/inc/gutenberg/app/**/*.+(js|jsx)', ['blocks-js']);
 	gulp.watch('src/*.html', browsersync.reload);
 	gulp.watch(php.src, ['php'], browsersync ? browsersync.reload : {});
 });

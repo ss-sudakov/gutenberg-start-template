@@ -1,5 +1,6 @@
 import { Component } from '@wordpress/element';
 import { Button } from '@wordpress/components';
+import functions from '../../../functions.jsx';
 
 const {
     MediaUpload,
@@ -32,11 +33,12 @@ export default class ImageControl extends Component {
 	render_image = (instans, image) =>
 	{
 		let render
-		if( Object.keys(image).length != 0 )
+		if( functions.isset(image) )
 		{
+
 			render = 
 					<div>
-						<img src={image.sizes.thumbnail.url} alt={image.title} />
+						<img src={ functions.isset(image.sizes.thumbnail) ? image.sizes.thumbnail.url : image.sizes.full.url } alt={image.title} />
 						<Button isDefault onClick={(event) => { this.remove_image__handler(instans, event) } } >Remove Image</Button>
 					</div>
 
@@ -49,7 +51,7 @@ export default class ImageControl extends Component {
 	{
 		let render;
 		
-		if(Object.keys(image).length === 0)
+		if( !functions.isset(image) )
 		{
 			render =
 						<MediaUpload
